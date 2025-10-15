@@ -1,0 +1,35 @@
+:root {
+  /* === Brand Colors === */
+  --color-primary: #4f46e5; /* Indigo */
+  --color-primary-dark: #3730a3; /* Deep Blue */
+  --color-accent: #facc15; /* Electric Yellow */
+
+  /* === Neutrals === */
+  --color-background: #f9fafb; /* Off-white */
+  --color-text: #111827; /* Charcoal */
+  --color-white: #ffffff;
+  --color-border: #e5e7eb;
+
+  /* === Feedback Colors === */
+  --color-error: #ef4444; /* Red */
+  --color-error-bg: #fef2f2;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+
+  /* === Shadows / Effects === */
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+:root {
+  --font-header: "Inter", sans-serif;
+  --font-body: "Roboto Mono", monospace;
+}
+body {
+  font-family: var(--font-body);
+}
+h1,
+h2,
+h3 {
+  font-family: var(--font-header);
+}

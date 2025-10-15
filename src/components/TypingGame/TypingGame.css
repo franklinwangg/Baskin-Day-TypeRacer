@@ -1,0 +1,323 @@
+.typing-game-container {
+  background-color: #f7f7f7; /* light neutral */
+  padding: 2rem;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.time-left .time-label {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+.time-value {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.words-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  margin-bottom: 1rem;
+}
+
+.word {
+  color: #4b5563;
+}
+
+.word-current {
+  background-color: #4f46e5; /* indigo */
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: 600;
+}
+
+.typing-input {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #4f46e5; /* indigo */
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.typing-input:focus {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.wpm-box .wpm-value {
+  color: #facc15; /* yellow accent */
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.start-btn {
+  background-color: #4f46e5; /* indigo */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  background-color: #4338ca;
+}
+
+.reset-btn {
+  background-color: white;
+  color: #4f46e5;
+  border: 2px solid #4f46e5;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  background-color: #e0e7ff;
+}
+
+.submit-score input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.preview-btn {
+  background-color: #facc15; /* yellow accent */
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.preview-btn:hover {
+  background-color: #fcd34d;
+}
+
+/* === Race Page Colors === */
+.typing-game-container {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: var(--font-body);
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-header);
+}
+
+.game-header h1 {
+  color: var(--color-primary);
+  font-size: 2rem;
+}
+
+.header-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.time-left .time-label {
+  color: var(--color-text);
+  font-size: 0.875rem;
+}
+
+.time-left .time-value {
+  color: var(--color-accent);
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.leaderboard-button {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.leaderboard-button:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.game-box {
+  background-color: var(--color-white);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-md);
+}
+
+.instructions {
+  color: var(--color-text);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.words-box {
+  min-height: 120px;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.words-box .word {
+  color: var(--color-text);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.words-box .word-current {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-weight: 600;
+}
+
+.typing-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.stats div span {
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.start-btn {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.reset-btn {
+  background-color: var(--color-white);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  background-color: var(--color-background);
+}
+
+.submit-score {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.submit-score h2 {
+  width: 100%;
+  font-family: var(--font-header);
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.submit-score input {
+  flex: 1 1 200px;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid var(--color-border);
+  font-size: 1rem;
+}
+
+.preview-btn {
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+}
+
+.preview-btn:hover {
+  filter: brightness(1.1);
+}
+
+.typing-input-2 {
+  width: 98%;
+
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+
+  width: 98%;
+  padding-top: 0.75rem;
+  padding-left: 0.75rem;
+  padding-bottom: 0.75rem;
+}

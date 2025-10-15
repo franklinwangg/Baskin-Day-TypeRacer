@@ -1,0 +1,65 @@
+:root {
+  --color-primary: #4f46e5; /* Indigo */
+  --color-accent: #facc15; /* Gold/Yellow for top scores */
+  --color-background: #ffffff; /* White background */
+  --color-text: #111827; /* Charcoal */
+}
+
+.leaderboard-container {
+  margin-top: 2rem;
+  font-family: "Inter", sans-serif;
+  color: var(--color-text);
+}
+
+.leaderboard-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.leaderboard-box {
+  background-color: var(--color-background);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.loading-text {
+  font-size: 0.875rem;
+  color: #6b7280; /* Gray for loading text */
+}
+
+.score-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.score-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  color: var(--color-text);
+}
+
+.score-item.top-score {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.score-name {
+  font-weight: 500;
+}
+
+.score-details {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.score-correct {
+  font-family: "Roboto Mono", monospace;
+  font-size: 1rem;
+}

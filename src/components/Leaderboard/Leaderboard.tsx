@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { supabase } from '../../lib/supabase'
+import './Leaderboard.css'
 
 type ScoreRow = {
   id: string
@@ -32,27 +33,33 @@ export default function Leaderboard() {
 
   useEffect(() => {
     fetchTop()
-    // optional: setInterval to poll
     const t = setInterval(fetchTop, 5000)
     return () => clearInterval(t)
   }, [])
 
   return (
-    <div className="mt-8">
-      <h2 className="text-lg font-semibold mb-2">Leaderboard (Top 10)</h2>
-      <div className="bg-white p-4 rounded shadow">
-        {loading && <div className="text-sm text-gray-500">Loading...</div>}
-        <ol className="space-y-2">
+    <div className="leaderboard-container">
+      <h2 className="leaderboard-header">Leaderboard (Top 10)</h2>
+      <div className="leaderboard-box">
+        {loading && <div className="loading-text">Loading...</div>}
+        <ol className="score-list">
           {scores.map((s, i) => (
-            <li key={s.id} className="flex justify-between items-center">
-              <div>
-                <div className="font-medium">{i + 1}. {s.display_name}</div>
-                <div className="text-sm text-gray-500">WPM: {s.wpm} · Accuracy: {Math.round((s.accuracy ?? 0) * 100)}%</div>
+            <li
+              key={s.id}
+              className={`score-item ${i < 3 ? 'top-score' : ''}`}
+            >
+              <div className="score-name">
+                {i + 1}. {s.display_name}
               </div>
-              <div className="font-mono text-lg">{s.correct_words}</div>
+              <div className="score-details">
+                WPM: {s.wpm} · Accuracy: {Math.round((s.accuracy ?? 0) * 100)}%
+              </div>
+              <div className="score-correct">{s.correct_words}</div>
             </li>
           ))}
-          {scores.length === 0 && <div className="text-sm text-gray-500">No scores yet — be the first!</div>}
+          {scores.length === 0 && (
+            <div className="loading-text">No scores yet — be the first!</div>
+          )}
         </ol>
       </div>
     </div>
