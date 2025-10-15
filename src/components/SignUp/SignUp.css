@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom right, #f9fafb, #f3f4f6);
+  /* background: linear-gradient(to bottom right, #f9fafb, #f3f4f6); */
 }
 
 /* Form */
@@ -91,7 +91,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--color-background);
+  /* background-color: var(--color-background); */
 }
 
 /* === Form === */
