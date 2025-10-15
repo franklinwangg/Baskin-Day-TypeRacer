@@ -1,0 +1,87 @@
+/* --- Backdrop --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+/* --- Modal Container --- */
+.result-modal {
+  background: linear-gradient(180deg, #ffd700, #ffb800);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 90%;
+  color: #1f2937;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  font-family: "Inter", sans-serif;
+}
+
+/* --- Title --- */
+.modal-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #1f2937;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.4);
+  margin-bottom: 1rem;
+}
+
+/* --- Stats --- */
+.modal-content p {
+  font-size: 1rem;
+  margin: 0.4rem 0;
+}
+
+.modal-content span {
+  font-weight: 700;
+}
+
+/* --- Player Info --- */
+.modal-player-info {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #3f3f3f;
+}
+
+/* --- Buttons --- */
+.modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.modal-btn {
+  font-family: "Poppins", sans-serif;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-btn.close {
+  background: #1f2937;
+  color: white;
+}
+
+.modal-btn.close:hover {
+  background: #111827;
+}
+
+.modal-btn.submit {
+  background: #ffffff;
+  color: #1f2937;
+  border: 2px solid #1f2937;
+}
+
+.modal-btn.submit:hover {
+  background: #1f2937;
+  color: white;
+}
