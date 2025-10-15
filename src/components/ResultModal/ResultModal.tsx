@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useGameStore } from "../../store/gameStore"; // assuming this stores player info
 import "./ResultModal.css";
 
 type Props = {
@@ -11,7 +13,6 @@ type Props = {
   accuracy: number;
   playerName: string;
   playerEmail: string;
-  onSubmit: () => void;
 };
 
 const ResultModal: React.FC<Props> = ({
@@ -23,9 +24,25 @@ const ResultModal: React.FC<Props> = ({
   accuracy,
   playerName,
   playerEmail,
-  onSubmit,
 }) => {
+  const navigate = useNavigate();
+  const { reset, setPlayerInfo } = useGameStore();
+
   if (!open) return null;
+
+  // Handle closing: wipe player info and redirect
+  const handleClose = () => {
+    reset(); // clear game state
+    setPlayerInfo("", ""); // clear player info
+    onClose();
+    navigate("/signup");
+  };
+
+  // Handle view leaderboard button
+  const handleViewLeaderboard = () => {
+    console.log("Viewing leaderboard");
+    navigate("/leaderboard");
+  };
 
   return (
     <div className="modal-backdrop">
@@ -58,11 +75,11 @@ const ResultModal: React.FC<Props> = ({
         </div>
 
         <div className="modal-buttons">
-          <button className="modal-btn close" onClick={onClose}>
+          <button className="modal-btn close" onClick={handleClose}>
             Close
           </button>
-          <button className="modal-btn submit" onClick={onSubmit}>
-            Submit Score
+          <button className="modal-btn submit" onClick={handleViewLeaderboard}>
+            View Leaderboard
           </button>
         </div>
       </motion.div>

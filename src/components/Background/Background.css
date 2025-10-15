@@ -1,0 +1,173 @@
+:root {
+  /* reuse your color variables or define fallbacks */
+  --color-primary: #4f46e5;
+  --color-primary-dark: #3730a3;
+  --color-accent: #facc15;
+  --bg-base: #f9fafb;
+}
+
+/* container sits behind everything */
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none; /* so it doesn't block clicks */
+  overflow: hidden;
+  background: var(--bg-base);
+}
+
+/* animated soft gradient layer */
+.bg-gradient {
+  position: absolute;
+  inset: -20%;
+  background: radial-gradient(
+      40% 40% at 10% 10%,
+      rgba(250, 205, 80, 0.12) 0%,
+      transparent 20%
+    ),
+    radial-gradient(
+      35% 35% at 90% 80%,
+      rgba(79, 70, 229, 0.1) 0%,
+      transparent 25%
+    );
+  mix-blend-mode: normal;
+  animation: gradientShift 18s linear infinite alternate;
+  transform-origin: center;
+}
+
+/* blobs */
+.blob {
+  position: absolute;
+  width: 60vmax;
+  max-width: 1200px;
+  opacity: 0.95;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* individual blob placement / parallax speed */
+.blob-1 {
+  left: -10%;
+  top: -10%;
+  transform: translateZ(0) scale(0.9);
+  animation: floatSlow 12s ease-in-out infinite;
+}
+
+.blob-2 {
+  right: -18%;
+  bottom: -8%;
+  width: 50vmax;
+  animation: floatSlower 16s ease-in-out infinite;
+}
+
+/* dots / accents */
+.dot {
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0.9;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+.dot-1 {
+  width: 28px;
+  height: 28px;
+  left: 6%;
+  top: 22%;
+  background: var(--color-accent);
+  animation: pop 6s ease-in-out infinite;
+}
+.dot-2 {
+  width: 18px;
+  height: 18px;
+  right: 12%;
+  top: 12%;
+  background: var(--color-primary);
+  animation: pop 8s ease-in-out infinite;
+}
+.dot-3 {
+  width: 12px;
+  height: 12px;
+  right: 24%;
+  bottom: 18%;
+  background: rgba(255, 255, 255, 0.9);
+  animation: pop 7.5s ease-in-out infinite;
+}
+
+/* grain overlay (very subtle) */
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.02" /></svg>');
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes gradientShift {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-6%) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(0.98);
+  }
+  50% {
+    transform: translateY(-6%) rotate(6deg) scale(1);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(0.98);
+  }
+}
+
+@keyframes floatSlower {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translateY(-3%) rotate(-5deg) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes pop {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-6px) scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Respect prefers-reduced-motion: minimize animations */
+@media (prefers-reduced-motion: reduce) {
+  .bg-gradient,
+  .blob,
+  .dot {
+    animation: none !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .blob {
+    opacity: 0.85;
+  }
+  .dot {
+    display: none;
+  }
+  .result-modal {
+    max-width: 92%;
+  }
+}

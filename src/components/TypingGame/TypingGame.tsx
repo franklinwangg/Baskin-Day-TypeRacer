@@ -217,7 +217,6 @@ export default function TypingGame() {
         accuracy={totalSubmitted === 0 ? 0 : correctCount / totalSubmitted}
         playerName={playerName}
         playerEmail={playerEmail}
-        onSubmit={submitScore}
       />
     </div>
   );

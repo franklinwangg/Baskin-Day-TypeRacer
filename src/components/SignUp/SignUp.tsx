@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useGameStore } from "../../store/gameStore";
+import { useNavigate } from "react-router-dom";
 import "../SignUp/SignUp.css";
 
 const MotionForm = motion.form as React.ComponentType<
@@ -14,11 +15,17 @@ const MotionForm = motion.form as React.ComponentType<
   }
 >;
 
-export default function SignUpPage({ onComplete }: { onComplete: () => void }) {
+export default function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const setPlayerInfo = useGameStore((s) => s.setPlayerInfo);
+    const navigate = useNavigate();
+
+  function onComplete() {
+    navigate("/game");
+    return;
+  };
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,6 +36,8 @@ export default function SignUpPage({ onComplete }: { onComplete: () => void }) {
     setPlayerInfo(name.trim(), email.trim());
     onComplete();
   }
+
+
 
   return (
     <div className="signup-container">
