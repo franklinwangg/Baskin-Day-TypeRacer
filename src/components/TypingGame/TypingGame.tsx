@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useGameStore } from "../../store/gameStore";
 import { supabase } from "../../lib/supabase";
 import ResultModal from "../ResultModal/ResultModal";
+import { useNavigate } from "react-router-dom";
 import "./TypingGame.css";
 
 const DEFAULT_WORDS = `apple orange banana keyboard mouse monitor desk chair code compile react vite typescript function variable loop conditional string number boolean array object server client network latency`.split(
@@ -10,10 +11,11 @@ const DEFAULT_WORDS = `apple orange banana keyboard mouse monitor desk chair cod
 
 function calcWpm(correctWords: number, elapsedSeconds: number) {
   if (elapsedSeconds <= 0) return 0;
-  return Math.round((correctWords / elapsedSeconds) * 60);
+  return Math.round((correctWords / elapsedSeconds) * 30);
 }
 
 export default function TypingGame() {
+  const navigate = useNavigate();
   const {
     words,
     setWords,
@@ -29,8 +31,9 @@ export default function TypingGame() {
     playerName,
     playerEmail,
   } = useGameStore(); // ✅ get player info from store
+  
 
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(30);
   const [showResult, setShowResult] = useState(false);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -38,7 +41,8 @@ export default function TypingGame() {
 
   // Shuffle and set words at start
   useEffect(() => {
-    setWords(shuffle([...DEFAULT_WORDS, ...DEFAULT_WORDS]));
+    // setWords(shuffle([...DEFAULT_WORDS, ...DEFAULT_WORDS]));
+    setWords(shuffle([...DEFAULT_WORDS]));
   }, [setWords]);
 
 
@@ -50,17 +54,18 @@ export default function TypingGame() {
 
       intervalRef.current = window.setInterval(() => {
         const elapsedSeconds = Math.floor((Date.now() - startTs) / 1000);
-        setTimeLeft(Math.max(0, 60 - elapsedSeconds));
+        setTimeLeft(Math.max(0, 30 - elapsedSeconds));
         tick(0);
 
         // 🟡 Access currentIndex and words dynamically each tick
         const { currentIndex: idx, words: wordList } = useGameStore.getState();
-        const timeUp = elapsedSeconds >= 60;
+        const timeUp = elapsedSeconds >= 30;
         const allWordsTyped = idx >= wordList.length;
 
         if (timeUp || allWordsTyped) {
           clearInterval(intervalRef.current!);
           setShowResult(true);
+          submitScore();
         }
       }, 200);
 
@@ -87,7 +92,7 @@ export default function TypingGame() {
     reset();
     start();
     setShowResult(false);
-    setTimeLeft(60);
+    setTimeLeft(30);
   }
 
   function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -102,7 +107,6 @@ export default function TypingGame() {
 
   async function submitScore() {
     if (correctCount > 200) {
-      alert("Suspicious score — please try again.");
       return;
     }
 
@@ -115,18 +119,21 @@ export default function TypingGame() {
           total_tokens: totalSubmitted,
           wpm: calcWpm(
             correctCount,
-            60 - timeLeft === 0 ? 60 : 60 - timeLeft
+            30 - timeLeft === 0 ? 30 : 30 - timeLeft
           ),
           accuracy:
             totalSubmitted === 0 ? 0 : correctCount / totalSubmitted,
         },
       ]);
       if (error) throw error;
+  else {
+    useGameStore.getState().reset(); // sign out user
+    navigate("/signup", { replace: true }); // send them to signup
+  }
+
       setShowResult(false);
-      alert("Score submitted! Check leaderboard.");
     } catch (err) {
       console.error(err);
-      alert("Failed to submit score.");
     }
   }
 
@@ -186,7 +193,7 @@ export default function TypingGame() {
             <div className="wpm-value">
               {calcWpm(
                 correctCount,
-                60 - timeLeft === 0 ? 60 : 60 - timeLeft
+                30 - timeLeft === 0 ? 30 : 30 - timeLeft
               )}
             </div>
           </div>
@@ -213,7 +220,7 @@ export default function TypingGame() {
         onClose={() => setShowResult(false)}
         correctCount={correctCount}
         totalSubmitted={totalSubmitted}
-        wpm={calcWpm(correctCount, 60 - timeLeft === 0 ? 60 : 60 - timeLeft)}
+        wpm={calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft)}
         accuracy={totalSubmitted === 0 ? 0 : correctCount / totalSubmitted}
         playerName={playerName}
         playerEmail={playerEmail}

@@ -63,3 +63,41 @@
   font-family: "Roboto Mono", monospace;
   font-size: 1rem;
 }
+
+.score-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.score-item {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr; /* name | stats | score */
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: monospace; /* ensures perfect alignment */
+}
+
+.top-score {
+  font-weight: 600;
+}
+
+.score-name {
+  text-align: left;
+}
+
+.score-details {
+  text-align: center;
+}
+
+.score-correct {
+  text-align: right;
+}
+
+.leaderboard-header {
+  text-align: center;
+  margin: 0 auto;
+  font-weight: 600;
+  font-size: 1.5rem;
+}

@@ -31,11 +31,31 @@ export default function Leaderboard() {
     setLoading(false)
   }
 
+  // useEffect(() => {
+  //   fetchTop()
+  //   const t = setInterval(fetchTop, 5000)
+  //   return () => clearInterval(t)
+  // }, [])
+
   useEffect(() => {
-    fetchTop()
-    const t = setInterval(fetchTop, 5000)
-    return () => clearInterval(t)
-  }, [])
+  fetchTop()
+
+  const channel = supabase
+    .channel('scores-changes')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'scores' },
+      () => {
+        fetchTop() // refresh when scores update
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabase.removeChannel(channel)
+  }
+}, [])
+
 
   return (
     <div className="leaderboard-container">

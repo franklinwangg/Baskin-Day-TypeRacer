@@ -171,3 +171,15 @@
     max-width: 92%;
   }
 }
+
+.background {
+  position: fixed; /* stay behind everything */
+  top: 0;
+  left: 0;
+  width: 100vw; /* full viewport width */
+  height: 100vh; /* full viewport height */
+  background-size: cover; /* fills the screen */
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1; /* puts it behind your other elements */
+}

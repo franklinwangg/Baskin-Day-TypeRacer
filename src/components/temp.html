@@ -1,0 +1,59 @@
+<div className="site-bg" aria-hidden>
+  {/* Animated gradient layer */}
+  <div className="bg-gradient" />
+
+  {/* Blobby svg shapes — separate elements for parallax */}
+  <svg
+    className="blob blob-1"
+    viewBox="0 0 600 600"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    <defs>
+      <linearGradient id="g1" x1="0" x2="1">
+        <stop offset="0" stopColor="var(--color-accent)" stopOpacity="1" />
+        <stop offset="1" stopColor="var(--color-primary)" stopOpacity="1" />
+      </linearGradient>
+      <filter id="blur1" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="40" />
+      </filter>
+    </defs>
+    <g filter="url(#blur1)">
+      <path
+        fill="url(#g1)"
+        d="M421,331Q392,412,323,437Q254,462,189,428Q124,394,83,331Q42,268,82,203Q122,138,187,106Q252,74,316,98Q380,122,420,187Q460,252,421,331Z"
+      />
+    </g>
+  </svg>
+
+  <svg
+    className="blob blob-2"
+    viewBox="0 0 600 600"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    <defs>
+      <linearGradient id="g2" x1="0" x2="1">
+        <stop offset="0" stopColor="#FFB88C" />
+        <stop offset="1" stopColor="#FF7AB6" />
+      </linearGradient>
+      <filter id="blur2" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="36" />
+      </filter>
+    </defs>
+    <g filter="url(#blur2)">
+      <path
+        fill="url(#g2)"
+        d="M484,337Q454,424,372,452Q290,480,206,450Q122,420,80,340Q38,260,88,184Q138,108,216,95Q294,82,357,118Q420,154,465,225Q510,296,484,337Z"
+      />
+    </g>
+  </svg>
+
+  {/* subtle noise overlay */}
+  <div className="grain" />
+
+  {/* small floating circles for interest */}
+  <div className="dot dot-1" />
+  <div className="dot dot-2" />
+  <div className="dot dot-3" />
+</div>
