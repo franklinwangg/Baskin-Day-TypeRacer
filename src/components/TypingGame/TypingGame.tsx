@@ -5,9 +5,10 @@ import ResultModal from "../ResultModal/ResultModal";
 import { useNavigate } from "react-router-dom";
 import "./TypingGame.css";
 
-const DEFAULT_WORDS = `apple orange banana keyboard mouse monitor desk chair code compile react vite typescript function variable loop conditional string number boolean array object server client network latency`.split(
-  " "
-);
+const DEFAULT_WORDS =
+  `apple orange banana keyboard mouse monitor desk chair code compile react vite typescript function variable loop conditional string number boolean array object server client network latency`.split(
+    " "
+  );
 
 function calcWpm(correctWords: number, elapsedSeconds: number) {
   if (elapsedSeconds <= 0) return 0;
@@ -31,7 +32,6 @@ export default function TypingGame() {
     playerName,
     playerEmail,
   } = useGameStore(); // ✅ get player info from store
-  
 
   const [timeLeft, setTimeLeft] = useState(30);
   const [showResult, setShowResult] = useState(false);
@@ -44,8 +44,6 @@ export default function TypingGame() {
     // setWords(shuffle([...DEFAULT_WORDS, ...DEFAULT_WORDS]));
     setWords(shuffle([...DEFAULT_WORDS]));
   }, [setWords]);
-
-
 
   useEffect(() => {
     if (running) {
@@ -62,23 +60,26 @@ export default function TypingGame() {
         const timeUp = elapsedSeconds >= 30;
         const allWordsTyped = idx >= wordList.length;
 
-if (timeUp || allWordsTyped) {
-  clearInterval(intervalRef.current!);
-  setShowResult(true);
-  submitScore(); // ✅ add this
-}
+        if (timeUp || allWordsTyped) {
+          clearInterval(intervalRef.current!);
+          setShowResult(true);
+      const {
+    correctCount,
+    totalSubmitted,
+    playerName,
+    playerEmail,
+  } = useGameStore.getState(); // ✅ always up to date
 
+
+          submitScore({correctCount, totalSubmitted, playerName, playerEmail}); // ✅ add this
+        }
       }, 200);
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }
-}, [running, tick]);
-
-
-
-
+      return () => {
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      };
+    }
+  }, [running, tick]);
 
   // Shuffle helper
   function shuffle<T>(arr: T[]) {
@@ -106,7 +107,19 @@ if (timeUp || allWordsTyped) {
     }
   }
 
-  async function submitScore() {
+async function submitScore({
+  correctCount,
+  totalSubmitted,
+  playerName,
+  playerEmail,
+}: {
+  correctCount: number;
+  totalSubmitted: number;
+  playerName: string;
+  playerEmail: string;
+}) {
+
+
     if (correctCount > 200) {
       return;
     }
@@ -118,19 +131,15 @@ if (timeUp || allWordsTyped) {
           email: playerEmail || null,
           correct_words: correctCount,
           total_tokens: totalSubmitted,
-          wpm: calcWpm(
-            correctCount,
-            30 - timeLeft === 0 ? 30 : 30 - timeLeft
-          ),
-          accuracy:
-            totalSubmitted === 0 ? 0 : correctCount / totalSubmitted,
+          wpm: calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft),
+          accuracy: totalSubmitted === 0 ? 0 : correctCount / totalSubmitted,
         },
       ]);
       if (error) throw error;
-  else {
-    useGameStore.getState().reset(); // sign out user
-    navigate("/signup", { replace: true }); // send them to signup
-  }
+      else {
+        useGameStore.getState().reset(); // sign out user
+        navigate("/signup", { replace: true }); // send them to signup
+      }
 
       setShowResult(false);
     } catch (err) {
@@ -170,9 +179,7 @@ if (timeUp || allWordsTyped) {
         <input
           ref={inputRef}
           value={typed}
-          onChange={(e) =>
-            useGameStore.getState().setTyped(e.target.value)
-          }
+          onChange={(e) => useGameStore.getState().setTyped(e.target.value)}
           onKeyDown={onKeyDown}
           placeholder="Start typing..."
           className="typing-input-2"
@@ -192,10 +199,7 @@ if (timeUp || allWordsTyped) {
           <div className="wpm-box">
             <div>WPM</div>
             <div className="wpm-value">
-              {calcWpm(
-                correctCount,
-                30 - timeLeft === 0 ? 30 : 30 - timeLeft
-              )}
+              {calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft)}
             </div>
           </div>
         </div>
