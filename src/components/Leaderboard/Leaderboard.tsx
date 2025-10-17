@@ -15,27 +15,90 @@ export default function Leaderboard() {
   const [scores, setScores] = useState<ScoreRow[]>([])
   const [loading, setLoading] = useState(false)
 
-  async function fetchTop() {
-    setLoading(true)
-    const { data, error } = await supabase
-      .from('scores')
-      .select('id, display_name, correct_words, wpm, accuracy, inserted_at')
-      .order('correct_words', { ascending: false })
-      .order('wpm', { ascending: false })
-      .limit(10)
-    if (error) {
-      console.error(error)
-    } else {
-      setScores(data as ScoreRow[])
+  // async function fetchTop() {
+  //   setLoading(true)
+
+
+
+    
+  //   const { data, error } = await supabase
+  //     .from('scores')
+  //     .select('id, display_name, correct_words, wpm, accuracy, inserted_at')
+  //     .order('correct_words', { ascending: false })
+  //     .order('wpm', { ascending: false })
+  //     .limit(10)
+  //   if (error) {
+  //     console.error(error)
+  //   } else {
+  //     setScores(data as ScoreRow[])
+  //   }
+  //   setLoading(false)
+  // }
+
+  async function fetchTop(limit: number | null = 10) {
+  try {
+    setLoading(true);
+
+    let query = supabase
+      .from("scores")
+      .select(
+        "id, display_name, correct_words, wpm, accuracy, inserted_at"
+      );
+
+    // If you want ALL users, remove the limit and ordering conditions
+    if (limit) {
+      query = query
+        .order("correct_words", { ascending: false })
+        .order("wpm", { ascending: false })
+        .limit(limit);
     }
-    setLoading(false)
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching leaderboard:", error.message);
+      return;
+    }
+
+    // Sort by performance metric (wpm × accuracy)
+    const sorted = (data as ScoreRow[]).sort(
+      (a, b) => b.wpm * b.accuracy - a.wpm * a.accuracy
+    );
+
+    setScores(sorted);
+  } catch (err) {
+    console.error("Unexpected error fetching scores:", err);
+  } finally {
+    setLoading(false);
   }
+}
+
+
+  // useEffect(() => {
+  //   fetchTop()
+  //   const t = setInterval(fetchTop, 5000)
+  //   return () => clearInterval(t)
+  // }, [])
 
   useEffect(() => {
-    fetchTop()
-    const t = setInterval(fetchTop, 5000)
-    return () => clearInterval(t)
-  }, [])
+  fetchTop(null)
+
+  const channel = supabase
+    .channel('scores-changes')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'scores' },
+      () => {
+        fetchTop() // refresh when scores update
+      }
+    )
+    .subscribe()
+
+  return () => {
+    supabase.removeChannel(channel)
+  }
+}, [])
+
 
   return (
     <div className="leaderboard-container">

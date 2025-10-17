@@ -58,10 +58,12 @@ export default function TypingGame() {
         const timeUp = elapsedSeconds >= 60;
         const allWordsTyped = idx >= wordList.length;
 
-        if (timeUp || allWordsTyped) {
-          clearInterval(intervalRef.current!);
-          setShowResult(true);
-        }
+if (timeUp || allWordsTyped) {
+  clearInterval(intervalRef.current!);
+  setShowResult(true);
+  submitScore(); // ✅ add this
+}
+
       }, 200);
 
     return () => {
