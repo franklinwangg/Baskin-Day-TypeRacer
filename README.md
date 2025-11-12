@@ -14,16 +14,16 @@ A full-stack typing game inspired by TypeRacer, built for UCSC’s Baskin Day ev
 
 ## 🚀 Features
 
-- 🧑‍💻 Real-time multiplayer typing races
-- ⚡ Live progress tracking via WebSockets
-- 🧩 User matchmaking and dynamic race creation
-- 🏁 Performance stats and leaderboard tracking
+- ⚡ Real-time WPM & accuracy tracking
+- 🔁 Interval-based game loop with auto race end
+- 🧠 Zustand-powered global game state
+- 🗄️ Supabase-backed scoring + player data
 
 ---
 
 ## 🧩 Architecture
 
-![System Architecture Diagram](./docs/architecture-diagram.png)
+![System Architecture Diagram](./docs/system-architecture.png)
 
 **(1)** User → React
 User types or clicks; React components capture the event.
