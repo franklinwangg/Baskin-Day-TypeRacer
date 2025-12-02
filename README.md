@@ -1,16 +1,54 @@
-# React + Vite
+# 🎮 Baskin Day TypeRacer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack typing game inspired by TypeRacer, built for UCSC’s Baskin Day event. Used by 70+ students.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ⚙️ Tech Stack
 
-## React Compiler
+**Frontend:** React, CSS, Zustand  
+**Backend:** Supabase
+**Deployment:** Vercel
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- ⚡ Real-time WPM & accuracy tracking
+- 🔁 Interval-based game loop with auto race end
+- 🧠 Zustand-powered global game state
+- 🗄️ Supabase-backed scoring + player data
+
+---
+
+## 🧩 Architecture
+
+![System Architecture Diagram](./docs/system-architecture.png)
+
+**(1)** User → React
+User types or clicks; React components capture the event.
+
+**(2)** React → Zustand
+Components call store actions to update local state or trigger async work.
+
+**(3)** Zustand → Supabase
+Store sends any required fetch/insert requests to Supabase.
+
+**(4)** Supabase → Zustand
+Supabase returns data, and the store updates itself accordingly.
+
+**(5)** Zustand → React
+Subscribed React components automatically re-render.
+
+**(6)** React → UI
+The updated UI is shown to the user (new WPM, leaderboard, etc.).
+
+---
+
+## ▶️ Run Locally
+
+```bash
+git clone https://github.com/yourusername/BaskinDay-TypeRacer.git
+npm install
+npm run dev
+```
