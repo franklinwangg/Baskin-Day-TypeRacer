@@ -12,18 +12,7 @@ const DEFAULT_WORDS =
 
 function calcWpm(correctWords: number, elapsedSeconds: number) {
   if (elapsedSeconds <= 0) return 0;
-
-    // 🟡 Debug log
-      const wpm = Math.round((correctWords * 60) / elapsedSeconds);
-
-  console.log("[WPM Calculation]",
-    `correctWords=${correctWords}`,
-    `elapsedSeconds=${elapsedSeconds}`,
-    `=> wpm=${wpm}`
-  );
-  
-  // return Math.round((correctWords / elapsedSeconds) * 30);
-  return wpm;
+  return Math.round((correctWords / elapsedSeconds) * 30);
 }
 
 export default function TypingGame() {
@@ -68,33 +57,21 @@ export default function TypingGame() {
 
         // 🟡 Access currentIndex and words dynamically each tick
         const { currentIndex: idx, words: wordList } = useGameStore.getState();
-        
         const timeUp = elapsedSeconds >= 30;
         const allWordsTyped = idx >= wordList.length;
 
         if (timeUp || allWordsTyped) {
           clearInterval(intervalRef.current!);
           setShowResult(true);
+      const {
+    correctCount,
+    totalSubmitted,
+    playerName,
+    playerEmail,
+  } = useGameStore.getState(); // ✅ always up to date
 
-  //     const {
-  //   correctCount,
-  //   totalSubmitted,
-  //   playerName,
-  //   playerEmail,
-  // } = useGameStore.getState(); // ✅ always up to date
 
-  //         submitScore({correctCount, totalSubmitted, playerName, playerEmail}); // ✅ add this
-
-  const {
-  correctCount,
-  totalSubmitted,
-  playerName,
-  playerEmail,
-} = useGameStore.getState();
-
-const elapsed = Math.min(30, Math.floor((Date.now() - startTs) / 1000));
-submitScore({ correctCount, totalSubmitted, playerName, playerEmail, elapsed });
-
+          submitScore({correctCount, totalSubmitted, playerName, playerEmail}); // ✅ add this
         }
       }, 200);
 
@@ -130,82 +107,34 @@ submitScore({ correctCount, totalSubmitted, playerName, playerEmail, elapsed });
     }
   }
 
-// async function submitScore({
-//   correctCount,
-//   totalSubmitted,
-//   playerName,
-//   playerEmail,
-// }: {
-//   correctCount: number;
-//   totalSubmitted: number;
-//   playerName: string;
-//   playerEmail: string;
-// }) {
-
-
-//     if (correctCount > 200) {
-//       return;
-//     }
-
-//     try {
-// const elapsed = Math.max(30 - timeLeft, 1);
-// const wpm = calcWpm(correctCount, elapsed);
-// const accuracy = totalSubmitted === 0 ? 0 : correctCount / totalSubmitted;
-
 async function submitScore({
   correctCount,
   totalSubmitted,
   playerName,
   playerEmail,
-  elapsed,
 }: {
   correctCount: number;
   totalSubmitted: number;
   playerName: string;
   playerEmail: string;
-  elapsed: number;
 }) {
-try {
-  const wpm = calcWpm(correctCount, elapsed);
-  const accuracy = totalSubmitted === 0 ? 0 : correctCount / totalSubmitted;
-  console.log("[DEBUG Submit Score]", { correctCount, totalSubmitted, elapsed, wpm, accuracy });
 
 
+    if (correctCount > 200) {
+      return;
+    }
 
-// console.log("[DEBUG Submit Score]", {
-//   correctCount,
-//   totalSubmitted,
-//   timeLeft,
-//   elapsed,
-//   wpm,
-//   accuracy,
-//   playerName,
-//   playerEmail
-// });
-
-
-      // const { error } = await supabase.from("scores").insert([
-      //   {
-      //     display_name: playerName || "Anonymous",
-      //     email: playerEmail || null,
-      //     correct_words: correctCount,
-      //     total_tokens: totalSubmitted,
-      //     wpm: calcWpm(correctCount, Math.max(30 - timeLeft, 1)),
-      //     // wpm: calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft),
-      //     accuracy: totalSubmitted === 0 ? 0 : correctCount / totalSubmitted,
-      //   },
-      // ]);
+    try {
       const { error } = await supabase.from("scores").insert([
-  {
-    display_name: playerName || "Anonymous",
-    email: playerEmail || null,
-    correct_words: correctCount,
-    total_tokens: totalSubmitted,
-    wpm,
-    accuracy,
-  },
-]);
-
+        {
+          display_name: playerName || "Anonymous",
+          email: playerEmail || null,
+          correct_words: correctCount,
+          total_tokens: totalSubmitted,
+          wpm: calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft),
+          accuracy: totalSubmitted === 0 ? 0 : correctCount / totalSubmitted,
+        },
+      ]);
       if (error) throw error;
       else {
         useGameStore.getState().reset(); // sign out user
@@ -270,8 +199,7 @@ try {
           <div className="wpm-box">
             <div>WPM</div>
             <div className="wpm-value">
-              {/* {calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft)} */}
-              {calcWpm(correctCount, Math.max(30 - timeLeft, 1))}
+              {calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft)}
             </div>
           </div>
         </div>
@@ -297,8 +225,7 @@ try {
         onClose={() => setShowResult(false)}
         correctCount={correctCount}
         totalSubmitted={totalSubmitted}
-        wpm={calcWpm(correctCount, Math.max(30 - timeLeft, 1))}
-        // wpm={calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft)}
+        wpm={calcWpm(correctCount, 30 - timeLeft === 0 ? 30 : 30 - timeLeft)}
         accuracy={totalSubmitted === 0 ? 0 : correctCount / totalSubmitted}
         playerName={playerName}
         playerEmail={playerEmail}
