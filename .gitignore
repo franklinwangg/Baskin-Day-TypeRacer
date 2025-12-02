@@ -25,3 +25,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# new stuff
+dist/
+all_files.txt
+scripts/all_files.txt
+goals.txt
+node_modules
